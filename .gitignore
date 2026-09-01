@@ -1,0 +1,7 @@
+__pycache__/
+.venv*/
+results/*.mp4
+*.pyc
+
+# Third-party footage is linked, not re-hosted (see evidence/source.md)
+evidence/*.mp4
