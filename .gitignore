@@ -5,3 +5,4 @@ results/*.mp4
 
 # Third-party footage is linked, not re-hosted (see evidence/source.md)
 evidence/*.mp4
+upstream/AutoBio/
