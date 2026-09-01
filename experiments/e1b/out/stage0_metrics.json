@@ -1,0 +1,62 @@
+{
+  "stage": 0,
+  "name": "initial scene",
+  "gravcomp": false,
+  "model": {
+    "nq": 56,
+    "nv": 54,
+    "nu": 25,
+    "nsensor": 5,
+    "nbody": 67,
+    "timestep": 0.002
+  },
+  "pipette": {
+    "mass_g": 91.46,
+    "pos": [
+      0.10006,
+      -0.24998,
+      0.83233
+    ],
+    "quat": [
+      0.00235,
+      0.00233,
+      -0.70537,
+      0.70883
+    ],
+    "lin_vel": [
+      2.2e-05,
+      -4e-06,
+      0.000174
+    ],
+    "ang_vel": [
+      0.00043,
+      1.2e-05,
+      -0.002485
+    ],
+    "is_free": true
+  },
+  "contacts": {
+    "total": 11,
+    "deepest_penetration_mm": -0.087
+  },
+  "tactile": {
+    "1/ur:dh:touch_rh_thdistal": 0.0,
+    "1/ur:dh:touch_rh_ffdistal": 0.0,
+    "1/ur:dh:touch_rh_mfdistal": 0.0,
+    "1/ur:dh:touch_rh_rfdistal": 0.0,
+    "1/ur:dh:touch_rh_lfdistal": 0.0
+  },
+  "sites": {
+    "ik_site": [
+      0.67372,
+      -0.296,
+      1.2977
+    ],
+    "pipette_tip": [
+      0.10006,
+      -0.19699,
+      0.83207
+    ]
+  },
+  "finite": true
+}

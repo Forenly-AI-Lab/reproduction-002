@@ -55,6 +55,11 @@
         <!-- E1b: the pipette is a free body in the world, not welded to the hand.
              In upstream it is attached with frame.attach_body() onto 1/ur:dh:rh_base,
              which makes grasping impossible by construction. -->
+        <!-- E1b: two dedicated cameras. Neither upstream camera shows the dexterous
+             hand -- table_cam_front cuts it off, table_cam_left is filled by the arm --
+             and a grasp that cannot be seen cannot be verified. Both track the pipette. -->
+        <camera name="e1b_grasp_cam" mode="targetbody" target="tl/pipette" pos="0.75 -0.85 1.25" fovy="45" resolution="960 720"/>
+        <camera name="e1b_close_cam" mode="targetbody" target="tl/pipette" pos="0.35 -0.55 1.02" fovy="38" resolution="960 720"/>
         <body name="e1b_pipette_root" pos="0.04 -0.40 0.836" quat="0.70710678 0.70710678 0 0">
             <freejoint name="e1b_pipette_free"/>
             <attach model="pipette" body="pipette" prefix="tl/"/>

@@ -126,14 +126,61 @@ This is a consequence of Change 2, not an independent choice, and it is the one
 change that alters how the arm is *commanded* rather than what the scene
 contains.
 
-## Change 4 — gravity compensation is removed (Phase 5)
+## Change 4 — gravity compensation is removed (Phase 5) ✅
 
-*Pending — not yet applied.* Upstream calls `set_gravcomp(body1)` and
-`set_gravcomp(body2)` in `Pipette.prepare()`, which sets `gravcomp = 1`
-recursively on both arms. An arm that never feels its own weight, or the weight
-of what it holds, cannot be the subject of a grasp experiment. This will be
-removed and the arm's numerical stability re-verified before any grasp is
-scored.
+Upstream calls `set_gravcomp(body1)` / `set_gravcomp(body2)` in
+`Pipette.prepare()`, setting `gravcomp = 1` recursively on both arms. An arm
+that never feels its own weight, or the weight of what it holds, cannot be the
+subject of a grasp experiment. E1b never calls it, so the forked scene compiles
+with `gravcomp = 0` throughout.
+
+### The trap this uncovered
+
+The first implementation set `model.body_gravcomp[:] = 0` **after** load, to
+assert the default rather than trust it. That is a **silent no-op**: the field
+reads back exactly the value written, and the simulation ignores it. MuJoCo
+decides at compile time whether the gravity-compensation pass runs at all, so a
+model compiled without it never gains it, whatever the array later says.
+
+It was caught with an extreme test — raise gravity 10× and see whether the arm
+sags:
+
+| how gravcomp was set | `model.body_gravcomp[hand]` | hand-base sag under 10 g |
+|---|--:|--:|
+| runtime assignment after load, = 1 | **1.0** | **922.88 mm** |
+| not set at all | 0.0 | **922.88 mm** |
+| on the spec, before `compile()` | 1.0 | **0.00 mm** |
+
+Rows one and two are identical to two decimals while their fields differ:
+**the field is not the behaviour.** Under normal gravity the difference is
+invisible; a plausible-looking arm would have carried a hidden assist through
+the whole experiment.
+
+`e1b_scene.load()` now sets gravcomp the only way that works — on the
+`MjSpec`, before `compile()` — using upstream's own recursive helper verbatim.
+`load(gravcomp=True)` reproduces the assisted condition on demand, and
+`load(gravcomp=False)` is E1b, verified by the 922.88 mm collapse.
+
+## Change 5 — two cameras that can see the hand (Phase 6)
+
+Neither upstream camera can verify a grasp: `table_cam_front` cuts the dexterous
+hand off at the top of frame, and `table_cam_left` is filled by the arm. Two
+cameras were added to the forked scene, both `mode="targetbody"` tracking
+`tl/pipette` so they stay useful as the object moves:
+
+```xml
+<camera name="e1b_grasp_cam" mode="targetbody" target="tl/pipette" pos="0.75 -0.85 1.25" fovy="45"/>
+<camera name="e1b_close_cam" mode="targetbody" target="tl/pipette" pos="0.35 -0.55 1.02" fovy="38"/>
+```
+
+Cameras change nothing about the physics. They are listed here because *every*
+change is listed here.
+
+## Stage 0 archive
+
+`out/stage0_*.png` with `out/stage0_metrics.json` beside them — no screenshot
+without metrics. The render shows what the numbers claim: the pipette is a free
+body lying on the table, not held, with the rack and tube behind it.
 
 ---
 
