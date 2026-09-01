@@ -12,3 +12,6 @@ data/
 
 # Kisisel calisma notu — ic kararlar ve aday degerlendirmesi iceriyor, halka acik depoda yeri yok
 plan.md
+
+# Serializer ciktisi — 154 MB model.mjb dahil, uretilebilir, depoya girmez
+results/e1a-logs/

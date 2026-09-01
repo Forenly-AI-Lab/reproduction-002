@@ -1,0 +1,41 @@
+{
+  "label": "E1a \u2014 harness / positioning sanity baseline; NOT a grasp baseline",
+  "episodes": 3,
+  "successes": 3,
+  "success_rate_pct": 100.0,
+  "binomial_se_pct": 0.0,
+  "below_liquid_rate_pct": 100.0,
+  "liquid_drawn_rate_pct": 100.0,
+  "wall_total_s": 37.5,
+  "wall_per_episode_s": 11.2,
+  "mujoco": "3.3.0",
+  "episodes_detail": [
+    {
+      "seed": 0,
+      "success": true,
+      "t_success": 13.946000000001327,
+      "sim_time": 14.440000000001492,
+      "wall_s": 11.41,
+      "below_liquid": true,
+      "liquid_drawn": true
+    },
+    {
+      "seed": 1,
+      "success": true,
+      "t_success": 13.480000000001171,
+      "sim_time": 13.974000000001336,
+      "wall_s": 11.01,
+      "below_liquid": true,
+      "liquid_drawn": true
+    },
+    {
+      "seed": 2,
+      "success": true,
+      "t_success": 13.5660000000012,
+      "sim_time": 14.058000000001364,
+      "wall_s": 11.12,
+      "below_liquid": true,
+      "liquid_drawn": true
+    }
+  ]
+}

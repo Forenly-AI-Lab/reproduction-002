@@ -31,7 +31,15 @@ on.
 | Can we reproduce the *task* here? | **Partially.** [AutoBio](https://github.com/autobio-bench/AutoBio) ships a pipetting scene that **runs on this host at 19.2x real time** ([bring-up](results/2026-09-01-autobio-bringup.md)) — but its liquid is a plane-vs-mesh volume model in Python, not fluid dynamics, and it never feeds back into the solver |
 | Is that task the one in the video? | **No.** AutoBio's cell is UR5e + dexterous hand and UR5e + 2F85 gripper over centrifuge tubes. The overlap is the pipette and the liquid, not the robot or the glassware |
 
-**No success rate has been measured yet.** What has been measured is the
+**One number has been measured, and it is not the study's number.** E1a ran
+AutoBio's scripted expert 100 times: **100/100**, bit-deterministic across
+processes, 11.6 s per episode
+([record](results/2026-09-01-e1a-harness-baseline.md)). That is a *harness and
+positioning* sanity baseline — the pipette is welded to the hand, so there is no
+grasp in it — and it is not comparable to AutoBio's published π₀ score of 42.7 %,
+which is a learned policy rather than an oracle.
+
+**No grasp or tactile success rate has been measured yet.** What has been measured is the
 harness: the stack runs here, at a known speed, on a known embodiment — see
 [`results/2026-09-01-autobio-bringup.md`](results/2026-09-01-autobio-bringup.md).
 No claim about the source's 69% is made or implied.
