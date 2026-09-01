@@ -28,7 +28,7 @@ on.
 | Does the video show tactile sensing? | **No.** No sensor overlay, no contact visualisation, no failure/recovery segment |
 | Is the playback speed known? | **No.** The post itself says official project videos run at **5×**; whether this clip is one of them is unstated |
 | Can we reproduce the *method* here? | **No — blocked at the sensor.** Our G1+Inspire model has no tactile channel at all |
-| Can we reproduce the *task* here? | **Partially.** MuJoCo has no fluid of its own — but [AutoBio](https://github.com/autobio-bench/AutoBio) ships a pipetting scene with a liquid plugin, and it **runs on this host at 19.2x real time** ([bring-up](results/2026-09-01-autobio-bringup.md)) |
+| Can we reproduce the *task* here? | **Partially.** [AutoBio](https://github.com/autobio-bench/AutoBio) ships a pipetting scene that **runs on this host at 19.2x real time** ([bring-up](results/2026-09-01-autobio-bringup.md)) — but its liquid is a plane-vs-mesh volume model in Python, not fluid dynamics, and it never feeds back into the solver |
 | Is that task the one in the video? | **No.** AutoBio's cell is UR5e + dexterous hand and UR5e + 2F85 gripper over centrifuge tubes. The overlap is the pipette and the liquid, not the robot or the glassware |
 
 **No success rate has been measured yet.** What has been measured is the

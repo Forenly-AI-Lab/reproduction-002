@@ -14,6 +14,35 @@ environment at `.venv-autobio` — a separate venv, because AutoBio pins
 it, while the rest of this machine runs MuJoCo 3.12. The two coexist; they do
 not share a venv.
 
+## The physics engine is MuJoCo 3.3.0, and the liquid is not physics
+
+An early reading of this repository recorded that AutoBio "ships a liquid
+plugin." **That was wrong, and the correction matters more than the error.**
+
+`libmjlab.so.3.3.0` is a real MuJoCo plugin library, but what it registers is
+`MJLAB_DETENT_PLUGIN`, `MJLAB_THREAD_PLUGIN` and `MJLAB_GRID_PLUGIN` — click
+stops, screw threads and an SDF grid, i.e. the *mechanisms* of lab instruments.
+None of it concerns liquid. `meshplane.so` is not a MuJoCo plugin at all; it is
+a separate Python extension exposing `Mesh`, `MeshPlane`, `SurfaceDynamics`.
+
+The liquid is a **plane cutting the container's interior mesh**, with volume
+kept in Python (`initial_volume = uniform(15e-6, 45e-6)`). Height is a plane
+distance:
+
+```python
+return container.liquid.surface.distance - body_pos_in_container @ surface_normal
+```
+
+It updates *after* each step, from Python, and does not feed back into the
+solver — no `body_mass` or `body_inertia` is touched, so a full pipette weighs
+exactly what an empty one does.
+
+**So block 2 of the gate still stands.** AutoBio does not remove "MuJoCo has no
+liquid"; it routes around it with geometry good enough to *score* a pipetting
+task — how much was drawn, transferred, spilled — while sloshing, dripping and
+viscosity are absent. Anything this study later says about liquid handling must
+carry that qualifier.
+
 Two traps, both real:
 - The plugin is loaded by **relative path** (`mujoco.mj_loadPluginLibrary('./libmjlab.so.3.3.0')`).
   The process must start in `upstream/AutoBio/autobio`, or the scene will not load.
