@@ -9,3 +9,6 @@ upstream/AutoBio/
 
 # Downloaded third-party datasets — fetched from Hugging Face, never vendored
 data/
+
+# Kisisel calisma notu — ic kararlar ve aday degerlendirmesi iceriyor, halka acik depoda yeri yok
+plan.md
